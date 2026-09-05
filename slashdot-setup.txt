@@ -1,0 +1,67 @@
+Slashdot terminal reader setup
+=============================
+
+What was done on this machine
+----------------------------
+The machine runs Fedora Linux 43. Created:
+
+  ~/.newsboat/urls
+    https://rss.slashdot.org/Slashdot/slashdotMain "~Slashdot"
+
+  ~/.newsboat/config
+    auto-reload yes
+    reload-time 30
+    browser "lynx %u"
+
+  ~/.local/bin/slashdot
+    Executable launcher that checks for Newsboat and runs newsboat -r.
+
+The feed was downloaded and parsed successfully: 15 stories were present.
+The launcher's shell syntax was checked. Package installation could not
+finish because sudo required a password, so the reader itself was not tested.
+To finish on this machine, run:
+
+  sudo dnf install newsboat lynx
+  slashdot
+
+Reproduce on another Linux machine
+----------------------------------
+Copy setup-slashdot.sh to the machine and run as your normal user:
+
+  sh setup-slashdot.sh
+
+The script supports dnf (Fedora), apt-get (Debian/Ubuntu), pacman (Arch),
+zypper (openSUSE), and apk (Alpine). Package names and availability depend
+on the distribution's enabled repositories. Installing packages requires
+network access and working sudo access. On other distributions, install
+newsboat and lynx yourself, then rerun the script.
+
+The script preserves existing feeds, settings, and any existing slashdot
+launcher. It adds the feed only if absent and sets defaults only for options
+that have no active entry. It uses ~/.newsboat when that directory exists;
+otherwise it uses ${XDG_CONFIG_HOME:-$HOME/.config}/newsboat. Existing browser
+preferences are preserved. Custom Newsboat remote feed services or included
+configuration files may require manual adjustment.
+
+Run ~/.local/bin/slashdot, or simply slashdot if ~/.local/bin is on PATH.
+If necessary, add this to your shell profile:
+
+  export PATH="$HOME/.local/bin:$PATH"
+
+Reading
+-------
+Enter: open a feed or story
+r: refresh the selected feed
+o: open the selected story in the configured browser (Lynx by default)
+q: go back or quit (Lynx may ask for confirmation)
+?: show help
+
+Newsboat displays the content supplied by the RSS feed. Use Lynx for the
+story page and links; site access and rendering depend on the target site.
+The launcher opens your Newsboat feed list, including any other subscriptions.
+
+Sources
+-------
+https://slashdot.org/faq/feeds.shtml
+https://newsboat.org/
+https://newsboat.org/releases/2.40/docs/newsboat.html
