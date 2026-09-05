@@ -40,14 +40,14 @@ touch "$config_dir/urls" "$config_dir/config"
 
 feed='https://rss.slashdot.org/Slashdot/slashdotMain'
 if ! grep -Eq '^[[:space:]]*https?://rss\.slashdot\.org/Slashdot/slashdotMain([[:space:]]|$)' "$config_dir/urls"; then
-    printf '\n%s "~Slashdot"\n' "$feed" >> "$config_dir/urls"
+    printf '\n# Added by setup-slashdot.sh\n%s "~Slashdot"\n' "$feed" >> "$config_dir/urls"
 fi
 
 # Add defaults only where the user has not already configured an option.
 for setting in 'auto-reload yes' 'reload-time 30' 'browser "lynx %u"'; do
     key=${setting%% *}
     if ! grep -Eq "^[[:space:]]*$key[[:space:]]" "$config_dir/config"; then
-        printf '\n%s\n' "$setting" >> "$config_dir/config"
+        printf '\n# Added by setup-slashdot.sh\n%s\n' "$setting" >> "$config_dir/config"
     fi
 done
 
